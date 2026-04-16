@@ -19,9 +19,19 @@ jobs:
         run: |
           pip install pytest
           pip install flake8
+          pip install radon
+          pip install bandit
 
       - name: Run Pytest (Unit Tests)
         run: pytest
 
       - name: Run Flake8 (Linting)
         run: flake8 . --max-line-length=88
+
+      - name: Check Code Complexity (Radon)
+        run: |
+          radon cc . -s -n B
+
+      - name: Security Scan (Bandit)
+        run: |
+          bandit -r . -ll
